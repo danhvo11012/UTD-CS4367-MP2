@@ -48,20 +48,22 @@ public class AndroidInstrument {
 					u.apply(new AbstractStmtSwitch() {
 						
 						public void caseInvokeStmt(InvokeStmt stmt) {
-							InvokeExpr invokeExpr = stmt.getInvokeExpr();
+							InvokeExpr invokeExpr = stmt.getInvokeExpr();							
 							if(invokeExpr.getMethod().getName().equals("onDraw")) {
 
 								Local tmpRef = addTmpRef(b);
 								Local tmpString = addTmpString(b);
 								
-								  // insert "tmpRef = java.lang.System.out;" 
+								// insert "tmpRef = java.lang.System.out;" 
 						        units.insertBefore(Jimple.v().newAssignStmt( 
 						                      tmpRef, Jimple.v().newStaticFieldRef( 
 						                      Scene.v().getField("<java.lang.System: java.io.PrintStream out>").makeRef())), u);
 
 						        // insert "tmpLong = 'HELLO';" 
 						        units.insertBefore(Jimple.v().newAssignStmt(tmpString, 
-						                      StringConstant.v("HELLO")), u);
+						                      StringConstant.v("dxv180004")), u);
+						        
+						        System.out.println("dxv180004");
 						        
 						        // insert "tmpRef.println(tmpString);" 
 						        SootMethod toCall = Scene.v().getSootClass("java.io.PrintStream").getMethod("void println(java.lang.String)");                    
